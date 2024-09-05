@@ -12,6 +12,8 @@
 #'   for the area underneath the receiver operator characteristic curve
 #'   and 'bri' for the Brier score.
 #'
+#' @param ... Further arguments passed to bimm_init
+#'
 #' @return a dataframe with estimated evaluation metrics at each iteration
 #'   of the bimm fitting procedure.
 #'
@@ -22,7 +24,8 @@ bimm_cv <- function(data,
                     verbose,
                     n_fold = 10,
                     n_iteration = 5,
-                    evaluation_metric = 'auc'){
+                    evaluation_metric = 'auc',
+                    ...){
 
 
   .formula <- formula_expand(data = data, formula = formula)
@@ -48,7 +51,8 @@ bimm_cv <- function(data,
       bimm_init(data_train = data[-test_index[[fold]], ],
                 formula = formula,
                 verbose = FALSE,
-                n_iteration = 1)
+                n_iteration = 1,
+                ...)
   }
 
   # create a dataframe to store history from cross-validation
